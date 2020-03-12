@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import orderBy from 'lodash/orderBy';
 import ReactJsonView from 'react-json-view';
-import { IGuildResponseData } from 'albion-guild-api/src/guild/guild.service';
 
 import { SpecialText } from './SpecialText';
-import { GuildData } from './GuildData';
+import { GuildData } from './GuildData/GuildData';
 
 const MemberGrid = styled.div`
   padding: 5px;
@@ -14,7 +13,7 @@ const MemberGrid = styled.div`
     display: inline-block;
     border: 1px solid rgb(180, 180, 200);
     margin: 5px;
-    box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
     padding: 5px;
     background: rgb(253, 253, 255);
 
@@ -57,7 +56,7 @@ const App = () => {
   return (
     <AppStyle>
       <GuildData loading={<SpecialText text="Loading..." />}>
-        {(data: IGuildResponseData) => (
+        {data => (
           <>
             <SpecialText className="guildName" text={data.guild.name} />
             <MemberGrid>

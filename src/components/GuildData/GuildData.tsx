@@ -1,10 +1,10 @@
 import socketIOClient from 'socket.io-client';
 import { useEffect, useState } from 'react';
-import { IGuildResponseData } from 'albion-guild-api/src/guild/guild.service';
+import { IGuildResponseData } from './types';
 
 interface IGuildDataProps {
   loading: JSX.Element;
-  children(guildData: any): JSX.Element;
+  children(guildData: IGuildResponseData): JSX.Element;
 }
 
 const URL = process.env.NODE_ENV === 'development' ? 'http://localhost:4444' : '';
