@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'Koch Fraktur';
+  src: url('./fonts/koch-fraktur.ttf') format('truetype'); /* Legacy iOS */
+}
+
+html,
+body,
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.codeblock {
+  margin: 0;
+  background-color: #eee;
+  padding: 5px;
+  box-shadow: 2px 2px 2px inset rgba(0,0,0,0.1);
+  display: block;
+  overflow: auto;
+  border: 1px solid #aaa;
+  color: #222;
+}
