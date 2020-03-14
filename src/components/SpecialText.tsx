@@ -36,13 +36,13 @@ export const SpecialText = ({ text = 'None', ...props }) => {
       {text.split(' ').map((word, i) => {
         const [first, ...rest] = word.split('');
         return (
-          <>
+          <React.Fragment key={i}>
             {i > 0 && <div className="SpecialText__spacer"></div>}
             <div className="SpecialText__word" key={i}>
               <div className="SpecialText__highlight">{first}</div>
               <div className="SpecialText__rest">{rest.join('')}</div>
             </div>
-          </>
+          </React.Fragment>
         );
       })}
     </StyledSpecialText>
