@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import theme from '../styles/theme';
 
+import { IPlayerDetails } from './GuildData/types';
 import { SpecialText } from './SpecialText';
 import Stat from './Stat';
 
@@ -34,7 +35,12 @@ const StyledMember = styled.div`
 
 const formatter = new Intl.NumberFormat();
 
-const Member = ({ data, ...props }: any) => {
+interface IMemberProps {
+  [x: string]: any;
+  data: IPlayerDetails;
+}
+
+const Member = ({ data, ...props }: IMemberProps) => {
   return (
     <StyledMember {...props}>
       <div className="Member">

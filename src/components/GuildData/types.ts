@@ -4,7 +4,7 @@ export interface IGuildData {
   memberCount: number;
 }
 
-export interface IGuildMemberDetails {
+export interface IPlayerDetails {
   id: string;
   name: string;
   avatar: string;
@@ -21,10 +21,11 @@ export interface IGuildMemberDetails {
 }
 
 export interface IGuildMemberMap {
-  [key: string]: IGuildMemberDetails;
+  [key: string]: IPlayerDetails;
 }
 
 export interface IGuildResponseData {
   guild: IGuildData;
   members: IGuildMemberMap;
+  topKills: any[];
 }
