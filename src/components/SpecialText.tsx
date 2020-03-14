@@ -1,27 +1,50 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
-export const SpecialTextStyle = styled.div`
-  .highlight {
-    vertical-align: middle;
-    font-family: 'Koch Fraktur';
-    font-size: 1.5em;
+import theme from '../styles/theme';
+
+export const StyledSpecialText = styled.div`
+  line-height: 1;
+
+  .SpecialText__word {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .SpecialText__spacer {
+    display: inline-flex;
+    width: 20px;
+  }
+
+  .SpecialText__highlight {
+    display: inline-flex;
+    justify-content: center;
+    margin-right: 5px;
+    padding: 5px 3px;
+    border: 2px solid #fff;
+    font-family: 'Pirata One';
+    font-size: 125%;
+    min-width: 20px;
+    line-height: 1;
+    background: ${theme.A500};
   }
 `;
 
-export const SpecialText = ({ text = 'Unnamed', ...props }) => {
+export const SpecialText = ({ text = 'None', ...props }) => {
   return (
-    <SpecialTextStyle {...props}>
+    <StyledSpecialText {...props}>
       {text.split(' ').map((word, i) => {
         const [first, ...rest] = word.split('');
         return (
-          <Fragment key={i}>
-            {i > 0 && ' '}
-            <span className="highlight">{first}</span>
-            {rest.join('')}
-          </Fragment>
+          <>
+            {i > 0 && <div className="SpecialText__spacer"></div>}
+            <div className="SpecialText__word" key={i}>
+              <div className="SpecialText__highlight">{first}</div>
+              <div className="SpecialText__rest">{rest.join('')}</div>
+            </div>
+          </>
         );
       })}
-    </SpecialTextStyle>
+    </StyledSpecialText>
   );
 };
