@@ -5,90 +5,57 @@ import ReactJsonView from 'react-json-view';
 
 import GlobalStyle from '../styles/global';
 import NormalizeStyle from '../styles/normalize';
+
+import Loader from './Loader';
+import Panel from './Panel';
+import Member from './Member';
 import { SpecialText } from './SpecialText';
 import { GuildData } from './GuildData/GuildData';
 
 const MemberGrid = styled.div`
-  padding: 5px;
-
-  .member {
-    display: inline-block;
-    border: 1px solid rgb(180, 180, 200);
-    margin: 5px;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
-    padding: 5px;
-    background: rgb(253, 253, 255);
-
-    .name {
-      text-align: center;
-      font-size: 1.2em;
-      margin-top: 5px;
-    }
-
-    .stats {
-      padding: 0;
-      border-spacing: 0;
-      border-collapse: collapse;
-      background: white;
-
-      td {
-        padding: 3px 5px;
-        border: 1px solid rgb(180, 180, 200);
-      }
-    }
-  }
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  margin: 0 0 25px;
 `;
-
-const formatter = new Intl.NumberFormat();
 
 const AppStyle = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 10px;
+  padding: 0 40px 40px;
 
-  .guildName {
-    margin: 0.5em 0;
+  .App__header {
+    padding: 45px;
     font-size: 2.5em;
     text-align: center;
+  }
+
+  .App__content {
+    padding: 0 35px 45px;
   }
 `;
 
 const App = () => {
   return (
     <AppStyle>
-      <GuildData loading={<SpecialText text="Loading..." />}>
       <NormalizeStyle />
       <GlobalStyle />
+      <GuildData loading={<Loader />}>
         {data => (
           <>
-            <SpecialText className="guildName" text={data.guild.name} />
-            <MemberGrid>
-              {orderBy(Object.values(data.members), 'killFame', 'desc').map(player => (
-                <div className="member" key={player.name}>
-                  <SpecialText className="name" text={player.name} />
-                  <strong>PvP</strong>
-                  <table className="stats">
-                    <tbody>
-                      <tr>
-                        <td>Kill Fame</td>
-                        <td>{formatter.format(player.killFame)}</td>
-                      </tr>
-                      <tr>
-                        <td>Death Fame</td>
-                        <td>{formatter.format(player.deathFame)}</td>
-                      </tr>
-                      <tr>
-                        <td>Fame Ratio</td>
-                        <td>{formatter.format(player.fameRatio)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              ))}
-            </MemberGrid>
-            <div className="codeblock">
-              <ReactJsonView src={data} />
+            <div className="App__header">
+              <SpecialText text={data.guild.name} />
+            </div>
+            <div className="App__content">
+              <MemberGrid>
+                {orderBy(Object.values(data.members), 'name').map(player => (
+                  <Member key={player.name} data={player} />
+                ))}
+              </MemberGrid>
+              <Panel title="Raw JSON" collapse>
+                <ReactJsonView theme="eighties" style={{ padding: 10 }} src={data} />
+              </Panel>
             </div>
           </>
         )}
