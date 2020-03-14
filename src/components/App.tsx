@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import orderBy from 'lodash/orderBy';
 import ReactJsonView from 'react-json-view';
 
+import GlobalStyle from '../styles/global';
+import NormalizeStyle from '../styles/normalize';
 import { SpecialText } from './SpecialText';
 import { GuildData } from './GuildData/GuildData';
 
@@ -56,6 +58,8 @@ const App = () => {
   return (
     <AppStyle>
       <GuildData loading={<SpecialText text="Loading..." />}>
+      <NormalizeStyle />
+      <GlobalStyle />
         {data => (
           <>
             <SpecialText className="guildName" text={data.guild.name} />
