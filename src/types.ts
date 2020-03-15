@@ -29,3 +29,5 @@ export interface IGuildResponseData {
   members: IGuildMemberMap;
   topKills: any[];
 }
+
+export interface IReferenceData {}
