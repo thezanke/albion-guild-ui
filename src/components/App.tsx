@@ -11,6 +11,7 @@ import Panel from './Panel';
 import Member from './Member';
 import { SpecialText } from './SpecialText';
 import { GuildData } from './GuildData/GuildData';
+import { ReferenceData } from './ReferenceData/ReferenceData';
 
 const MemberGrid = styled.div`
   display: grid;
@@ -41,25 +42,29 @@ const App = () => {
     <AppStyle>
       <NormalizeStyle />
       <GlobalStyle />
-      <GuildData loading={<Loader />}>
-        {data => (
-          <>
-            <div className="App__header">
-              <SpecialText text={data.guild.name} />
-            </div>
-            <div className="App__content">
-              <MemberGrid>
-                {orderBy(Object.values(data.members), 'name').map(player => (
-                  <Member key={player.name} data={player} />
-                ))}
-              </MemberGrid>
-              <Panel title="Raw JSON" collapse>
-                <ReactJsonView theme="eighties" style={{ padding: 10 }} src={data} />
-              </Panel>
-            </div>
-          </>
+      <ReferenceData loading={<Loader />}>
+        {referenceData => (
+          <GuildData loading={<Loader />}>
+            {guildData => (
+              <>
+                <div className="App__header">
+                  <SpecialText text={guildData.guild.name} />
+                </div>
+                <div className="App__content">
+                  <MemberGrid>
+                    {orderBy(Object.values(guildData.members), 'name').map(player => (
+                      <Member key={player.name} data={player} />
+                    ))}
+                  </MemberGrid>
+                  <Panel title="Raw JSON" collapse>
+                    <ReactJsonView theme="eighties" style={{ padding: 10 }} src={guildData} />
+                  </Panel>
+                </div>
+              </>
+            )}
+          </GuildData>
         )}
-      </GuildData>
+      </ReferenceData>
     </AppStyle>
   );
 };

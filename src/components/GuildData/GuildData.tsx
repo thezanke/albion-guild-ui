@@ -13,11 +13,14 @@ export const GuildData = ({ loading, children }: IGuildDataProps) => {
 
   useEffect(() => {
     const socket = socketRef.current;
+
     socket.on('guildData', setData);
+    socket.emit('request:guildData');
+
     return () => {
       socket.off('guildData', setData);
     };
-  }, []);
+  }, [socketRef]);
 
   if (!data) return loading;
 
