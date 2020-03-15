@@ -1,28 +1,25 @@
-import socketIOClient from 'socket.io-client';
 import { useEffect, useState } from 'react';
 import { IGuildResponseData } from './types';
+import { useSocketRef } from '../../hooks/useSocketRef';
 
 interface IGuildDataProps {
   loading: JSX.Element;
   children(guildData: IGuildResponseData): JSX.Element;
 }
 
-const URL = process.env.NODE_ENV === 'development' ? 'http://localhost:4444' : '';
-
-export const GuildData = (props: IGuildDataProps) => {
+export const GuildData = ({ loading, children }: IGuildDataProps) => {
   const [data, setData] = useState<IGuildResponseData | null>(null);
+  const socketRef = useSocketRef();
 
   useEffect(() => {
-    const socket = socketIOClient(URL);
-
-    socket.on('response:guildData', setData);
-
+    const socket = socketRef.current;
+    socket.on('guildData', setData);
     return () => {
-      socket.close();
+      socket.off('guildData', setData);
     };
   }, []);
 
-  if (!data) return props.loading;
+  if (!data) return loading;
 
-  return props.children(data);
+  return children(data);
 };
